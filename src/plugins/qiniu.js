@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const config = {
   action: 'https://upload.qiniup.com/',
-  domain: 'http://trlanfeng.6655.la/',
+  domain: '',
 };
 
 function getQiniuImageUrl(key) {
@@ -13,7 +13,7 @@ function getQiniuImageUrl(key) {
 
 async function getQiniuToken() {
   try {
-    const res = await axios.get('/api/files/token?category=products');
+    const res = await axios.get('/api/qiniu/token');
     // window.console.log('upload_token:', res.data.token);
     return res.data.token;
   } catch (e) {
