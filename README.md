@@ -2,8 +2,6 @@
 
 技术栈：Vue.js + Element-UI
 
-# server/s - 销售端 - http://sugar.s.imedpower.com
-
 ## install
 
 `npm install`
