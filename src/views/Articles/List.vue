@@ -16,12 +16,12 @@
         <el-form-item label="分类">
           <el-select
             placeholder="请选择"
-            v-model="filter.channel"
+            v-model="filter.category"
             @change="getDataList"
           >
             <el-option label="全部" value></el-option>
             <el-option
-              v-for="item in $store.state.Enum.channel"
+              v-for="item in $store.state.Enum.category"
               :key="item.value"
               :value="item.value"
               :label="item.label"
@@ -34,7 +34,7 @@
       <el-button type="primary" @click="$router.push(`/${moduleName}/add`)">新增</el-button>
     </div>
     <div class="grid">
-      <el-table height="100%" :data="dataList" v-loading="isDataLoading">
+      <el-table style="height:100%;" :data="dataList" v-loading="isDataLoading">
         <el-table-column fixed type="index" width="50"></el-table-column>
         <el-table-column prop="id" v-if="false"></el-table-column>
         <el-table-column
@@ -43,8 +43,13 @@
           :show-overflow-tooltip="true"
           min-width="150"
         ></el-table-column>
-        <el-table-column prop="lang" label="语言" min-width="100"></el-table-column>
+        <el-table-column prop="lang" label="语言" min-width="100">
+          <template v-slot="scope">
+            {{scope.row.lang | lang}}
+          </template>
+        </el-table-column>
         <el-table-column prop="site" label="站点" min-width="100"></el-table-column>
+        <el-table-column prop="category" label="分类" min-width="100"></el-table-column>
         <el-table-column prop="publishedAt" label="发布日期" min-width="100"></el-table-column>
         <el-table-column
           label="操作"

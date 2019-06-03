@@ -25,6 +25,7 @@ export default {
   props: ['contentOut'],
   watch: {
     contentOut(newVal) {
+      window.console.log('TCL: contentOut -> newVal', newVal);
       this.content = newVal;
     },
   },

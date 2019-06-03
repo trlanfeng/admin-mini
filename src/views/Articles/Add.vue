@@ -30,7 +30,7 @@
           <el-form-item prop="category" label="分类">
             <el-select v-model="form.category">
               <el-option
-                v-for="item in $store.state.Enum.lang"
+                v-for="item in $store.state.Enum.category"
                 :key="item.value"
                 :value="item.value"
                 :label="item.label"
@@ -51,8 +51,8 @@
       <el-form-item prop="title" label="标题">
         <el-input v-model="form.title"></el-input>
       </el-form-item>
-      <el-form-item prop="description" label="内容">
-        <TinyMCE v-model="form.description"></TinyMCE>
+      <el-form-item prop="content" label="内容">
+        <TinyMCE v-model="form.content"></TinyMCE>
       </el-form-item>
       <el-form-item prop="cover" label="封面图片">
         <el-upload
@@ -85,13 +85,13 @@ export default {
       moduleName: 'articles',
       moduleTitle: '文章',
       isEditMode: false,
-      product_id: 0,
+      id: 0,
       form: {
         site: '',
         lang: '',
         category: '',
         title: '',
-        description: '',
+        content: '',
         cover: '',
         publishedAt: '',
       },
@@ -119,11 +119,12 @@ export default {
         if (!result) return;
         if (this.isEditMode) {
           await this.$http.put(
-            `/api/${this.moduleName}/${this.product_id}`,
+            `/api/${this.moduleName}/${this.id}`,
             this.form,
           );
           this.$message.success('更新成功');
         } else {
+          window.console.log('TCL: submitForm -> this.form', this.form);
           await this.$http.post(`/api/${this.moduleName}/`, this.form);
           this.$message.success('新增成功');
         }
@@ -132,39 +133,27 @@ export default {
         this.$httpErrorHandle(this, e);
       }
     },
-    async GetData(productId) {
+    async GetData(id) {
       try {
         const res = await this.$http.get(
-          `/api/${this.moduleName}/${productId}`,
+          `/api/${this.moduleName}/${id}`,
         );
         this.form = res.data;
-        this.fileList = res.data.images;
-        this.provinces = this.provinces.map((item) => {
-          const province = item;
-          if (
-            this.isEditMode
-            && this.form.prices.findIndex(item2 => item2.province === item.code)
-              > -1
-          ) {
-            province.active = false;
-          }
-          return province;
-        });
       } catch (e) {
         this.$httpErrorHandle(this, e);
       }
     },
   },
   mounted() {
-    this.product_id = this.$route.params.id;
-    this.isEditMode = !!this.product_id;
+    this.id = this.$route.params.id;
+    this.isEditMode = !!this.id;
     this.provinces = Provinces.map((item) => {
       const province = item;
       province.active = true;
       return province;
     });
     if (this.isEditMode) {
-      this.GetData(this.product_id);
+      this.GetData(this.id);
     }
   },
 };

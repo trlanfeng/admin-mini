@@ -1,3 +1,7 @@
+<template>
+  <div></div>
+</template>
+
 <script>
 import _ from 'lodash';
 
@@ -31,6 +35,7 @@ export default {
           params: this.combineParams(),
         });
         this.dataList = res.data || [];
+        console.log('TR: getDataList -> this.dataList', this.dataList);
         this.dataRecords = Number(res.headers.total) || 0;
         this.pageNum = Math.ceil(this.dataRecords / this.limit);
         // this.$log.log(res);
