@@ -61,8 +61,8 @@ const router = new Router({
  */
 router.beforeEach((to, from, next) => {
   document.title = `${to.meta.title || '管理中心'} - ${siteTitle}`;
-  // console.log('to', to);
-  // console.log('from', from);
+  // window.console.log('to', to);
+  // window.console.log('from', from);
   // 检查登录状态
   if (!localStorage.getItem('accessToken') || +new Date() > localStorage.getItem('expiredAt')) {
     if (to.name !== 'login') {

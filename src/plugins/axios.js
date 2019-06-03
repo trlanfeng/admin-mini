@@ -32,7 +32,7 @@ function install(Vue) {
    * 用于处理http请求发生的异常
    */
   Vue.prototype.$httpErrorHandle = function $httpErrorHandle(vm, error) {
-    console.error(error);
+    window.console.error(error);
     if (error === 'cancel') return;
     try {
       if (error.status === 401) {
@@ -45,7 +45,7 @@ function install(Vue) {
         );
       }
     } catch (e) {
-      console.warn('已捕获未知问题：', error);
+      window.console.warn('已捕获未知问题：', error);
       vm.$message.warning('发生错误，请向管理员报告问题。');
     }
   };

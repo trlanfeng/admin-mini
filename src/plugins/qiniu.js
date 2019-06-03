@@ -14,10 +14,10 @@ function getQiniuImageUrl(key) {
 async function getQiniuToken() {
   try {
     const res = await axios.get('/api/files/token?category=products');
-    // console.log('upload_token:', res.data.token);
+    // window.console.log('upload_token:', res.data.token);
     return res.data.token;
   } catch (e) {
-    // console.log(e);
+    // window.console.log(e);
     return '';
   }
 }
@@ -39,7 +39,7 @@ function axiosUpload(callback) {
         callback(res.data.url);
       })
       .catch((err) => {
-        console.log(err);
+        window.console.log(err);
       });
   };
   uploader.click();
