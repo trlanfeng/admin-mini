@@ -46,9 +46,6 @@ export default {
       moduleTitle: '文章',
       isEditMode: false,
       id: 0,
-      categoriesList: [],
-      tagsList: [],
-      seriesList: [],
       form: {
         title: '',
         content: '',
@@ -89,7 +86,7 @@ export default {
           await this.$http.post(`/api/${this.moduleName}/`, this.form);
           this.$message.success('新增成功');
         }
-        this.$router.push({ name: 'products' });
+        this.$router.push({ name: this.moduleName });
       } catch (e) {
         this.$httpErrorHandle(this, e);
       }
