@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <div class="logo" @click="$router.push('/')">Amin-Mini</div>
+    <div class="logo" @click="$router.push('/')">{{siteName}}</div>
     <!-- <div class="user">用户：{{userInfo.name}}</div> -->
     <div class="control">
       <el-button @click="logout">注销</el-button>
@@ -9,6 +9,11 @@
 </template>
 <script>
 export default {
+  data() {
+    return {
+      siteName: 'DCS',
+    };
+  },
   methods: {
     async logout() {
       try {
