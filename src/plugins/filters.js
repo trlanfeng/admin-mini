@@ -1,9 +1,9 @@
 import moment from 'moment';
 import Vue from 'vue';
-import Enum from '@/stores/Enum';
 import Provinces from 'china-division/dist/provinces.json';
 import Cities from 'china-division/dist/cities.json';
 import Areas from 'china-division/dist/areas.json';
+import Enum from '@/stores/Enum';
 /**
  * 根据值查询对应过滤后的名称
  * @param arr 需要查询的过滤名称数组

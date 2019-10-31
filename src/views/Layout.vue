@@ -1,10 +1,7 @@
 <template>
   <el-container class="layout">
     <el-header class="header">
-      <div class="logo" @click="$router.push('/')">Amin-Mini</div>
-      <div class="user">
-        <!-- 用户：{{userInfo.name}} -->
-      </div>
+      <TopBar></TopBar>
     </el-header>
     <el-container>
       <el-aside class="aside" width="200px">
@@ -18,10 +15,12 @@
 </template>
 <script>
 import Menu from './Menu.vue';
+import TopBar from './TopBar.vue';
 
 export default {
   components: {
     Menu,
+    TopBar,
   },
   // mounted() {
   //   // this.GetUserInfo();
@@ -57,14 +56,6 @@ export default {
     align-items: center;
     font-size: 28px;
     display: flex;
-    .logo {
-      flex: 1;
-      cursor: pointer;
-    }
-    .user {
-      padding-right: 20px;
-      font-size: 14px;
-    }
   }
   .aside {
     border-right: 1px solid #e6e6e6;

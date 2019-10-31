@@ -6,7 +6,6 @@
       :key="index"
       :route="item.route"
     >{{item.title}}</el-menu-item>
-    <el-menu-item @click="logout">注销</el-menu-item>
   </el-menu>
 </template>
 <script>
@@ -18,18 +17,6 @@ export default {
           title: '文章管理',
           route: '/articles',
         },
-        {
-          title: '分类管理',
-          route: '/categories',
-        },
-        {
-          title: '标签管理',
-          route: '/tags',
-        },
-        {
-          title: '系列管理',
-          route: '/series',
-        },
       ],
     };
   },
@@ -39,23 +26,7 @@ export default {
     },
   },
   methods: {
-    async logout() {
-      try {
-        const result = await this.$confirm(
-          '是否注销？',
-          '提示',
-          {
-            type: 'warning',
-          },
-        );
-        if (result) {
-          this.$storage.removeItem('token');
-          this.$router.push('/login');
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    },
+
   },
 };
 </script>
