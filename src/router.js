@@ -6,8 +6,8 @@ import Login from './views/Login.vue';
 
 // ! 引入所有路由
 import ArticlesRoutes from './routers/articles';
-
-const siteTitle = 'Admin Mini';
+// todo 站点名称
+const siteTitle = 'Admin mini';
 Vue.use(Router);
 
 // ! 合并所有路由

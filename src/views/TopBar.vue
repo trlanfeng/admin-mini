@@ -11,7 +11,8 @@
 export default {
   data() {
     return {
-      siteName: 'DCS',
+      // todo 站点名称
+      siteName: 'Admin mini',
     };
   },
   methods: {
