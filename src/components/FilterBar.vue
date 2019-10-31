@@ -1,3 +1,4 @@
+<!--公共过滤器组件-->
 <template>
   <div class="filter-bar" id="filter-bar">
     <div class="filter">

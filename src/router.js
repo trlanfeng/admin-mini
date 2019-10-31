@@ -1,18 +1,22 @@
+import localForage from 'localforage';
 import Vue from 'vue';
 import Router from 'vue-router';
 import Layout from './views/Layout.vue';
 import Login from './views/Login.vue';
 
-import Articles from './views/Articles/List.vue';
-import ArticlesAdd from './views/Articles/Add.vue';
-
-Vue.use(Router);
+// ! 引入所有路由
+import ArticlesRoutes from './routers/articles';
 
 const siteTitle = 'Admin Mini';
+Vue.use(Router);
 
-const router = new Router({
+// ! 合并所有路由
+const childrenRoutes = [].concat(
+  ArticlesRoutes,
+);
+const routerConfig = {
   mode: 'history',
-  base: process.env.BASE_URL,
+  base: process.env.VUE_APP_BASEURL,
   routes: [
     {
       path: '/login',
@@ -26,53 +30,45 @@ const router = new Router({
       path: '/',
       name: 'layout',
       component: Layout,
-      redirect: '/articles',
-      children: [
-        {
-          path: 'articles',
-          name: 'products',
-          component: Articles,
-          meta: {
-            title: '文章管理',
-          },
-        },
-        {
-          path: 'articles/add',
-          component: ArticlesAdd,
-          meta: {
-            title: '增加文章',
-          },
-        },
-        {
-          path: 'articles/edit/:id',
-          component: ArticlesAdd,
-          meta: {
-            title: '编辑文章',
-          },
-        },
-
-      ],
+      children: childrenRoutes,
     },
   ],
-});
+};
+const router = new Router(routerConfig);
 
 /**
  * 路由前置处理
  */
 router.beforeEach((to, from, next) => {
   document.title = `${to.meta.title || '管理中心'} - ${siteTitle}`;
-  // window.console.log('to', to);
-  // window.console.log('from', from);
+  window.console.log('to', to);
+  window.console.log('from', from);
   // 检查登录状态
-  if (!localStorage.getItem('accessToken') || +new Date() > localStorage.getItem('expiredAt')) {
-    if (to.name !== 'login') {
-      localStorage.setItem('login_redirect', to.path);
-      next('/login');
+  localForage.getItem('token').then((token) => {
+    if (token) {
+      if (to.name === 'login') {
+        localForage.getItem('login_redirect').then((res) => {
+          next(res || '/');
+        }).catch((err) => {
+          console.log('TR: err === login', err);
+        });
+        return;
+      }
+      next();
+    } else {
+      if (to.name !== 'login') {
+        localForage.setItem('login_redirect', to.path).then(() => {
+          next('/login');
+        }).catch((err) => {
+          console.log('TR: err !== login', err);
+        });
+        return;
+      }
+      next();
     }
-  } else if (to.name === 'login') {
-    next(localStorage.getItem('login_redirect') || '/');
-  }
-  next();
+  }).catch((err) => {
+    console.log('TR: err', err);
+  });
 });
 
 export default router;

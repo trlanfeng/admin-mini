@@ -10,10 +10,6 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 
 @import '~element-ui/packages/theme-chalk/src/index';
 
-body {
-	margin: 0;
-}
-
 .text-primary {
 	color: $--color-primary;
 }
@@ -56,11 +52,4 @@ body {
 }
 .bg-info {
 	background-color: $--color-info;
-}
-
-.mr10 {
-	margin-right: 10px;
-}
-.mb10 {
-	margin-bottom: 10px;
 }

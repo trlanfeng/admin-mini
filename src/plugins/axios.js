@@ -1,17 +1,17 @@
 /* eslint-disable no-param-reassign */
 import Axios from 'axios';
 import _Vue from 'vue';
+import localForage from 'localforage';
 
 function install(Vue) {
-  // Axios.defaults.baseURL = 'http://127.0.0.1:3060';
-  // Axios.defaults.headers.post['Content-Type'] = 'application/json';
+  Axios.defaults.baseURL = process.env.VUE_APP_APIURL;
   // 请求拦截器，给请求加上token
   Axios.interceptors.request.use(
-    (config) => {
+    async (config) => {
       const conf = config;
-      const accessToken = localStorage.getItem('accessToken');
-      if (accessToken) {
-        conf.headers.Authorization = `Bearer ${accessToken}`;
+      const token = await localForage.getItem('token');
+      if (token) {
+        conf.headers.Authorization = `Bearer ${token}`;
       }
       return conf;
     },
@@ -35,17 +35,16 @@ function install(Vue) {
     window.console.error(error);
     if (error === 'cancel') return;
     try {
-      if (error.status === 401) {
-        localStorage.setItem('login_redirect', vm.$route.fullPath);
+      if (error.response.status === 401) {
+        localForage.setItem('login_redirect', vm.$route.fullPath);
         vm.$router.push('/login');
         vm.$message.warning('请重新登录');
       } else {
         vm.$message.warning(
-          error.data.msg || error.data.message || '发生错误，请向管理员报告问题。',
+          error.response.data.msg || error.response.data.message || '发生错误，请向管理员报告问题。',
         );
       }
     } catch (e) {
-      window.console.warn('已捕获未知问题：', error);
       vm.$message.warning('发生错误，请向管理员报告问题。');
     }
   };

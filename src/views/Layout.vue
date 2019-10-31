@@ -24,7 +24,7 @@ export default {
     Menu,
   },
   // mounted() {
-  //   this.GetUserInfo();
+  //   // this.GetUserInfo();
   // },
   computed: {
     // userInfo() {
@@ -36,9 +36,9 @@ export default {
     //   try {
     //     const res = await this.$http.get('/api/users/me');
     //     this.$store.commit('setUserInfo', res.data);
-    //     this.$log.log(res);
+    //     console.log(res);
     //   } catch (e) {
-    //     this.$log.log(e);
+    //     console.log(e);
     //   }
     // },
     // AddToArr() {

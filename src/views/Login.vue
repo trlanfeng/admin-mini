@@ -2,7 +2,13 @@
   <div class="page">
     <div class="login">
       <div class="login__logo">LOGO</div>
-      <el-form :model="form" :rules="rules" ref="form" class="login__form" label-width="80px">
+      <el-form
+        :model="form"
+        :rules="rules"
+        ref="form"
+        class="login__form"
+        label-width="80px"
+      >
         <el-form-item prop="username" label="用户名" required>
           <el-input v-model="form.username"></el-input>
         </el-form-item>
@@ -43,31 +49,36 @@ export default {
       },
     };
   },
-  mounted() {},
+  mounted() { },
   methods: {
     async SubmitLogin() {
       this.isLoading = true;
       try {
-        const res = await this.$http.post('/api/auth/login', {
+        const res = await this.$http.post('/api/admins/login', {
           username: this.form.username,
           password: this.form.password,
         });
-        this.$log.log(res);
-        this.isLoading = false;
-        localStorage.setItem('accessToken', res.data.accessToken);
+        if (res.data.message) {
+          this.isLoading = false;
+          this.$message.error(res.data.message);
+          return;
+        }
+        await this.$storage.setItem('token', res.data);
         await this.GetUserInfo();
-        localStorage.setItem('expiredAt', res.data.expiredAt);
-        this.$router.push(localStorage.getItem('login_redirect') || '/');
+        const url = await this.$storage.getItem('login_redirect') || '/';
+        await this.$storage.removeItem('login_redirect');
+        this.$router.push(url);
       } catch (e) {
+        this.isLoading = false;
         this.$httpErrorHandle(this, e);
       }
     },
     async GetUserInfo() {
       try {
         const res = await this.$http.get('/api/users/me');
-        this.$log.log(res);
+        console.log(res);
       } catch (e) {
-        this.$log.log(e);
+        console.log(e);
       }
     },
   },

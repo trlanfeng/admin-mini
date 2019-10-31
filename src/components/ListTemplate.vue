@@ -1,3 +1,4 @@
+<!--公共列表模板-->
 <template>
   <div></div>
 </template>
@@ -6,7 +7,7 @@
 import _ from 'lodash';
 
 export default {
-  name: 'DataList',
+  name: 'ListTemplate',
   data() {
     return {
       pageIndex: 1,
@@ -34,10 +35,10 @@ export default {
         const res = await this.$http.get(`/api/${this.moduleName}`, {
           params: this.combineParams(),
         });
-        this.dataList = res.data || [];
-        this.dataRecords = Number(res.headers.total) || 0;
+        this.dataList = res.data.list || [];
+        this.dataRecords = Number(res.data.total) || 0;
         this.pageNum = Math.ceil(this.dataRecords / this.limit);
-        // this.$log.log(res);
+        // console.log(res);
       } catch (e) {
         this.$httpErrorHandle(this, e);
       }
@@ -48,6 +49,12 @@ export default {
         page: this.pageIndex,
         limit: this.pageSize,
       });
+    },
+    detailData(id) {
+      this.$router.push(`/${this.moduleName}/${id}`);
+    },
+    editDate(id) {
+      this.$router.push(`/${this.moduleName}/edit/${id}`);
     },
     async deleteData(id) {
       try {
@@ -63,7 +70,7 @@ export default {
           this.getDataList();
         }
       } catch (e) {
-        this.$log.error(e);
+        console.error(e);
       }
     },
   },
