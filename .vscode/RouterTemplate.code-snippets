@@ -1,0 +1,43 @@
+{
+  "RouterTemplate": {
+    "scope": "javascript",
+    "prefix": "RouterTemplate",
+    "description": "生成路由模板",
+    "body": [
+      "import routesHelper from './helper';",
+      "",
+      "// todo 修改文件夹路径",
+      "import List from '../views/${1:${TM_FILENAME_BASE/(.)/${1:/upcase}/}}/List.vue';",
+      "import Add from '../views/$1/Add.vue';",
+      "// todo 修改模块名与模块标题",
+      "const moduleName = '${2:$TM_FILENAME_BASE}';",
+      "const moduleTitle = '${3:$TM_FILENAME_BASE}';",
+      "",
+      "export default routesHelper(moduleName, [",
+      "  {",
+      "    path: '/',",
+      "    name: moduleName,",
+      "    component: List,",
+      "    meta: {",
+      "      title: `\\${moduleTitle}管理`,",
+      "    },",
+      "  },",
+      "  {",
+      "    path: '/add',",
+      "    component: Add,",
+      "    meta: {",
+      "      title: `增加\\${moduleTitle}`,",
+      "    },",
+      "  },",
+      "  {",
+      "    path: '/edit/:id',",
+      "    component: Add,",
+      "    meta: {",
+      "      title: `编辑\\${moduleTitle}`,",
+      "    },",
+      "  },",
+      "]);",
+      ""
+    ]
+  }
+}
