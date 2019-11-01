@@ -22,3 +22,6 @@ yarn-error.log*
 # 忽略 .vscode 文件夹内的非 .code-snippets 文件
 .vscode/*
 !.vscode/*.code-snippets
+
+.env*
+!.env.example
